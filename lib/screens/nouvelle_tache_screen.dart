@@ -17,10 +17,10 @@ class NouvelleTacheScreen extends ConsumerStatefulWidget {
 class _NouvelleTacheScreenState extends ConsumerState<NouvelleTacheScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titreController = TextEditingController();
-  final _coursController = TextEditingController(text: 'Mobile');
+  final _coursController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  DateTime _selectedDate = DateTime.now().add(const Duration(days: 2));
+  DateTime? _selectedDate;
 
   @override
   void dispose() {
@@ -31,11 +31,12 @@ class _NouvelleTacheScreenState extends ConsumerState<NouvelleTacheScreen> {
   }
 
   Future<void> _choisirDate() async {
+    final now = DateTime.now();
     final nouvelleDate = await showDatePicker(
       context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime.now().subtract(const Duration(days: 30)),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      initialDate: _selectedDate ?? now,
+      firstDate: now.subtract(const Duration(days: 30)),
+      lastDate: now.add(const Duration(days: 365)),
     );
 
     if (nouvelleDate != null) {
@@ -53,11 +54,20 @@ class _NouvelleTacheScreenState extends ConsumerState<NouvelleTacheScreen> {
 
   void _enregistrer() {
     if (_formKey.currentState!.validate()) {
+      if (_selectedDate == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Veuillez sélectionner une date d\'échéance'),
+          ),
+        );
+        return;
+      }
+
       final task = Task(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         titre: _titreController.text.trim(),
         cours: _coursController.text.trim(),
-        echeance: _selectedDate,
+        echeance: _selectedDate!,
         description: _descriptionController.text.trim().isEmpty
             ? null
             : _descriptionController.text.trim(),
@@ -127,11 +137,13 @@ class _NouvelleTacheScreenState extends ConsumerState<NouvelleTacheScreen> {
                 leading: const Icon(Icons.event),
                 title: const Text('Date d\'échéance'),
                 subtitle: Text(
-                  '${_selectedDate.day.toString().padLeft(2, '0')}/${_selectedDate.month.toString().padLeft(2, '0')}/${_selectedDate.year}',
+                  _selectedDate == null
+                      ? 'Aucune date sélectionnée'
+                      : '${_selectedDate!.day.toString().padLeft(2, '0')}/${_selectedDate!.month.toString().padLeft(2, '0')}/${_selectedDate!.year}',
                 ),
                 trailing: TextButton(
                   onPressed: _choisirDate,
-                  child: const Text('Modifier'),
+                  child: Text(_selectedDate == null ? 'Choisir' : 'Modifier'),
                 ),
               ),
               const SizedBox(height: 16),

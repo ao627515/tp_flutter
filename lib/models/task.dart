@@ -10,7 +10,7 @@ class Task {
   const Task({
     required this.id,
     required this.titre,
-    this.cours = 'Mobile',
+    required this.cours,
     required this.echeance,
     this.description,
     this.terminee = false,
@@ -38,7 +38,7 @@ class Task {
     return Task(
       id: json['id'] as String,
       titre: json['titre'] as String,
-      cours: json['cours'] as String? ?? 'Mobile',
+      cours: json['cours'] as String,
       echeance: DateTime.parse(json['echeance'] as String),
       description: json['description'] as String?,
       terminee: json['terminee'] as bool? ?? false,

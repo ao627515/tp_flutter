@@ -10,8 +10,8 @@ class ConnexionScreen extends StatefulWidget {
 }
 
 class _ConnexionScreenState extends State<ConnexionScreen> {
-  final _emailController = TextEditingController(text: 'amina@campusflow.bf');
-  final _passwordController = TextEditingController(text: 'password123');
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void dispose() {

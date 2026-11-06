@@ -27,43 +27,7 @@ final filterProvider =
 /// Gestionnaire d'état de la collection des tâches.
 class TachesNotifier extends Notifier<List<Task>> {
   @override
-  List<Task> build() {
-    final now = DateTime.now();
-    return [
-      Task(
-        id: '1',
-        titre: 'Rendu TP Dart',
-        cours: 'Mobile',
-        echeance: now.add(const Duration(days: 1)),
-        description: 'Modèles en Dart pur et tests unitaires',
-        terminee: false,
-      ),
-      Task(
-        id: '2',
-        titre: 'Projet Flutter',
-        cours: 'Mobile',
-        echeance: now.add(const Duration(days: 4, hours: 3)),
-        description: 'Architecture, navigation et gestion d\'état avec Riverpod',
-        terminee: false,
-      ),
-      Task(
-        id: '3',
-        titre: 'Examen UX',
-        cours: 'UXUI',
-        echeance: now.subtract(const Duration(days: 1)),
-        description: 'Wireframes, ergonomie et conformité accessibilité',
-        terminee: false,
-      ),
-      Task(
-        id: '4',
-        titre: 'Configuration Android Studio',
-        cours: 'Mobile',
-        echeance: now.subtract(const Duration(days: 3)),
-        description: 'Installation du SDK et validation avec flutter doctor',
-        terminee: true,
-      ),
-    ];
-  }
+  List<Task> build() => [];
 
   void ajouter(Task task) {
     state = [...state, task];
