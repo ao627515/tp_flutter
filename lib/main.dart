@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const CampusFlowApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CampusFlowApp extends StatelessWidget {
+  const CampusFlowApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CampusFlow',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFEC3013),
+        ),
+        cardTheme: const CardThemeData(
+          elevation: 1,
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        ),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Mon application'),
-        ),
-        body: const Padding(
-          padding: EdgeInsets.all(16),
-          child: Text('Bonjour'),
-        ),
+      home: const Scaffold(
+        body: Center(child: Text('CampusFlow')),
       ),
     );
   }
